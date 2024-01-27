@@ -4,6 +4,16 @@
 
 这个项目做成了六宫格，并放在浏览器里存储，好处是实时保存。窗口方便管理，不乱。
 
+## 启动
+
+```sh
+npm install -g pnpm
+
+pnpm --version
+
+pnpm install
+```
+
 ## 部署
 
 为了方便部署，直接使用githubPages进行了部署，省去了服务器过期的顾虑。
