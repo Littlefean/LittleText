@@ -1,0 +1,93 @@
+#app {
+  width: 100vw;
+  height: 100vh;
+  color: #fff;
+  background: linear-gradient(to bottom right, #333, #222);
+  display: flex;
+
+  nav {
+    background: #222;
+    width: 16rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
+
+    .top {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        img {
+          width: 2rem;
+          height: 2rem;
+        }
+        h1 {
+          font-size: 1.5rem;
+        }
+        .add {
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+      }
+
+      ul {
+        li {
+          list-style: none;
+          display: flex;
+          gap: 0.5rem;
+
+          .label {
+            padding: 0.5rem 0.6rem;
+            flex: 1;
+            text-align: left;
+          }
+          .delete {
+            padding: 0.5rem 0.7rem;
+            opacity: 0.3;
+            transition: 0.3s;
+
+            &:hover {
+              opacity: 1;
+              background-color: #f00;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  a {
+    color: #0f0;
+    text-decoration: none;
+    border-radius: 0.3rem;
+
+    &:hover {
+      background: #555;
+    }
+  }
+
+  button {
+    border: 1px solid #0b0;
+    border-radius: 0.25rem;
+    background-color: #333;
+    transition: 0.3s;
+
+    &:hover {
+      border-color: #0f0;
+      background-color: #444;
+    }
+  }
+
+  * {
+    color-scheme: dark;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}

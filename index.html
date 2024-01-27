@@ -2,39 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LittleText</title>
-    <link rel="stylesheet" href="./css/index.css" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
   </head>
   <body>
-    <!-- 左侧栏 -->
-    <nav>
-      <h3>
-        <img src="./favicon.ico" alt="Icon" width="30" height="30" />
-        <span>LittleText</span>
-        <button class="add-panel-btn">+</button>
-      </h3>
-      <div class="nav-content">
-        <!-- 内容将会被清空，用js重写 -->
-        <div class="nav-item">
-          <span class="title">default</span>
-          <button disabled>x</button>
-        </div>
-      </div>
-      <aside>使用：<span class="current-cache"></span> / 5MB</aside>
-    </nav>
-    <!-- 右侧主界面 -->
-    <main>
-      <!-- 暂定六个 -->
-      <textarea></textarea>
-      <textarea></textarea>
-      <textarea></textarea>
-      <textarea></textarea>
-      <textarea></textarea>
-      <textarea></textarea>
-    </main>
+    <div id="app">
+      <nav>
+        <section class="top">
+          <header>
+            <img src="/favicon.ico" alt="icon" />
+            <h1>LittleText</h1>
+            <button class="add">+</button>
+          </header>
+          <ul id="panels"></ul>
+        </section>
+        <section>
+          <a href="https://github.com/Littlefean/LittleText" target="_blank">Github</a>
+        </section>
+      </nav>
+      <main></main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
   </body>
-  <script src="./js/jsonStorage.js"></script>
-  <script src="./js/index.js"></script>
 </html>
