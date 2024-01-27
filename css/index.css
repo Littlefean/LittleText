@@ -29,6 +29,13 @@ body nav {
   /* 左侧栏背景颜色 */
   padding: 20px;
 }
+body nav h3 {
+  display: flex;
+  align-items: center;
+}
+body nav h3 span {
+  padding: 0 5px;
+}
 body nav .add-panel-btn {
   background-color: green;
   color: greenyellow;
@@ -57,6 +64,15 @@ body nav .nav-content .nav-item button {
 }
 body nav .nav-content .selected {
   box-shadow: 0 0 5px wheat;
+}
+body nav aside {
+  line-height: 2em;
+}
+body nav .refresh-nav-btn {
+  line-height: 1.5em;
+  color: greenyellow;
+  background-color: green;
+  padding: 0 10px;
 }
 body main {
   flex: 1;

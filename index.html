@@ -5,20 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LittleText</title>
     <link rel="stylesheet" href="./css/index.css" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
   </head>
   <body>
     <!-- 左侧栏 -->
     <nav>
       <h3>
-        <span>🧠LittleText</span>
+        <img src="./favicon.ico" alt="Icon" width="30" height="30" />
+        <span>LittleText</span>
         <button class="add-panel-btn">+</button>
       </h3>
       <div class="nav-content">
+        <!-- 内容将会被清空，用js重写 -->
         <div class="nav-item">
           <span class="title">default</span>
           <button disabled>x</button>
         </div>
       </div>
+      <aside>使用：<span class="current-cache"></span> / 5MB</aside>
     </nav>
     <!-- 右侧主界面 -->
     <main>

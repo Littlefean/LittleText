@@ -8,7 +8,8 @@ window.onload = function () {
   initStorage();
   // 加载默认
   initLoad();
-  // 刷新
+  // 刷新缓存剩余量
+  refreshCurrentCacheSize();
 
   // 增加面板按钮 绑定
   let addPanelBtn = document.querySelector(".add-panel-btn");
@@ -33,6 +34,10 @@ window.onload = function () {
     // 更新界面
     refreshNav();
   });
+  // 刷新按钮增
+  document.querySelector(".refresh-nav-btn").onclick = () => {
+    refreshNav();
+  };
 };
 
 /**
@@ -75,7 +80,8 @@ function refreshTextareaByPanel(panelName) {
     // textarea.addEventListener("input", handleTextareaInput);
     textarea.oninput = (e) => {
       JSON_STORAGE.set(`${panelName}-text-${i}`, e.target.value);
-    }
+      refreshCurrentCacheSize();
+    };
     // function handleTextareaInput(e) {
     //   JSON_STORAGE.set(`${panelName}-text-${i}`, e.target.value);
     // }
@@ -91,9 +97,20 @@ function refreshNav() {
   // 更新内容
   const panelList = JSON_STORAGE.get("panelList");
   for (let navItemName of panelList) {
-    navContent.appendChild(getNavItem(navItemName, GlobalData.currentPanel === navItemName));
+    navContent.appendChild(
+      getNavItem(navItemName, GlobalData.currentPanel === navItemName)
+    );
   }
 }
+
+/**
+ * 刷新剩余缓存
+ */
+function refreshCurrentCacheSize() {
+  const currentCache = document.querySelector(".current-cache");
+  currentCache.innerText = JSON_STORAGE.getSize().toFixed(2);
+}
+
 /**
  * 初始化本地缓存
  */

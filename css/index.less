@@ -28,6 +28,13 @@ body {
     width: 15%;
     background-color: #333; /* 左侧栏背景颜色 */
     padding: 20px;
+    h3 {
+      display: flex;
+      align-items: center;
+      span {
+        padding: 0 5px;
+      }
+    }
     .add-panel-btn {
       background-color: green;
       color: greenyellow;
@@ -57,6 +64,17 @@ body {
       .selected {
         box-shadow: 0 0 5px wheat;
       }
+    }
+
+    aside {
+      line-height: 2em;
+    }
+
+    .refresh-nav-btn {
+      line-height: 1.5em;
+      color: greenyellow;
+      background-color: green;
+      padding: 0 10px;
     }
   }
   main {
