@@ -14,3 +14,26 @@
 https://littlefean.github.io/LittleText/
 ```
 
+## key-value存储结构
+
+```js
+// 存放所有的面板 其作用仅仅像一个索引表一样。
+`panelList`: "['default', '面板1', '计划']"
+
+// 增加更详细的信息
+`${name}-data`: `{
+    width: 2,
+    height: 3,
+    createTime: 177756447.5456,
+}`
+
+// name为面板，i为从上往下从左往右第几个宫格
+// i 是从0开始的
+// [0][1][2]
+// [3][4][5]
+`${name}-text-${i}`: "xxxx"
+
+
+
+```
+

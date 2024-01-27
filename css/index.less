@@ -24,10 +24,47 @@ body {
   display: flex; /* 使用 Flex 布局 */
   height: 100vh;
 
+  // 新建面板的时候的弹窗
+  dialog.add-panel {
+    height: 500px;
+    width: 600px;
+    left: 50%;
+    top: 50%;
+    margin-left: -300px;
+    margin-top: -250px;
+    text-align: center;
+    background-color: #2b2b2b;
+    color: white;
+    border-radius: 15px;
+    h1 {
+      line-height: 2em;
+    }
+    button.close {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      width: 50px;
+      height: 50px;
+      color: red;
+      background-color: darkred;
+    }
+    button.create {
+      font-size: 20px;
+      line-height: 2em;
+      padding: 0 10px;
+      background-color: green;
+      color: yellowgreen;
+    }
+  }
+
   nav {
     width: 15%;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 设置导航栏的高度为整个视口的高度 */
+
     background-color: #333; /* 左侧栏背景颜色 */
-    padding: 20px;
+    padding: 5px;
     h3 {
       display: flex;
       align-items: center;
@@ -40,7 +77,28 @@ body {
       color: greenyellow;
     }
     .nav-content {
+      flex-grow: 1; /* 让内容占据剩余的空间 */
+      overflow-y: auto; /* 添加滚动条，如果内容溢出 */
       margin-top: 10px;
+      padding: 3px;
+
+      /* Firefox浏览器 */
+      scrollbar-width: thin;
+      scrollbar-color: #666 #1e1e1e;
+      /* IE浏览器 */
+      scrollbar-base-color: #666;
+      scrollbar-arrow-color: #eee;
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #666;
+        border-radius: 6px;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #1e1e1e;
+      }
+
       .nav-item {
         user-select: none;
         background-color: #1e1e1e;
@@ -52,10 +110,13 @@ body {
         &:hover {
           margin-left: 0.2em;
           cursor: pointer;
+          button {
+            display: block;
+          }
         }
         // 删除按钮
         button {
-          display: block;
+          display: none;
           float: right;
           color: red;
           background-color: darkred;
@@ -69,24 +130,23 @@ body {
     aside {
       line-height: 2em;
     }
-
-    .refresh-nav-btn {
-      line-height: 1.5em;
-      color: greenyellow;
-      background-color: green;
-      padding: 0 10px;
-    }
   }
   main {
     flex: 1;
-    display: flex; /* 使用 Flex 布局 */
-    flex-wrap: wrap; /* 允许多行布局 */
-    justify-content: space-between; /* 在主轴上均匀分布元素 */
+    // display: flex; /* 使用 Flex 布局 */
+    // flex-wrap: wrap; /* 允许多行布局 */
+    // justify-content: space-between; /* 在主轴上均匀分布元素 */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 三列，每列宽度相等 */
+    grid-template-rows: repeat(2, auto); /* 两行，每行高度自适应内容 */
+
+    // padding: 10px;
+    // gap: 10px;
 
     textarea {
       outline: solid 1px gray;
-      width: calc(33.333%); /* 计算每个 div 的宽度，减去 padding */
-      // margin-bottom: 5px; /* 添加底部边距 */
+      // width: calc(33.333%); /* 计算每个 div 的宽度，减去 padding */
+      width: 100%;
       padding: 5px;
 
       background-color: transparent;
@@ -107,7 +167,7 @@ body {
       scrollbar-base-color: #666;
       scrollbar-arrow-color: #eee;
       &::-webkit-scrollbar {
-        width: 12px;
+        width: 5px;
       }
       &::-webkit-scrollbar-thumb {
         background-color: #666;

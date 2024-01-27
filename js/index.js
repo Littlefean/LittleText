@@ -1,3 +1,6 @@
+/**
+ * 存放一些全局变量信息
+ */
 const GlobalData = {
   // 当前选择的面板
   currentPanel: "default",
@@ -6,89 +9,57 @@ const GlobalData = {
 window.onload = function () {
   // 初始化缓存，防止一些key没有
   initStorage();
-  // 加载默认
-  initLoad();
+  // 更新左侧导航栏
+  refreshNav();
+  // 更新右侧区域
+  refreshTextareaByPanel(GlobalData.currentPanel);
   // 刷新缓存剩余量
   refreshCurrentCacheSize();
 
   // 增加面板按钮 绑定
-  let addPanelBtn = document.querySelector(".add-panel-btn");
-  addPanelBtn.addEventListener("click", () => {
-    let name = prompt("请输入你要创建的名字");
-    if (name === null) {
-      return;
-    }
-    // 检查名字是否重复
-    const panelList = JSON_STORAGE.get("panelList");
-    if (panelList.includes(name)) {
-      alert("不能取这个名字，重复了");
-      return;
-    }
-    // 更新数据
-    panelList.push(name);
-    JSON_STORAGE.set("panelList", panelList);
-    // 初始化数据
-    for (let i = 0; i < 6; i++) {
-      JSON_STORAGE.set(`${name}-text-${i}`, "");
-    }
-    // 更新界面
-    refreshNav();
-  });
-  // 刷新按钮增
-  document.querySelector(".refresh-nav-btn").onclick = () => {
+  document.querySelector(".add-panel-btn").onclick = () => {
+    ADD_PANEL.open();
+  };
+
+  // 弹窗面板内部交互逻辑
+  ADD_PANEL.createBtn.onclick = () => {
+    ADD_PANEL.create();
+    ADD_PANEL.close();
     refreshNav();
   };
+  ADD_PANEL.closeBtn.onclick = () => {
+    ADD_PANEL.close();
+  };
+  ADD_PANEL.titleInput.oninput = (e) => {
+    ADD_PANEL.title = e.target.value;
+  };
+  // 更新select框里的选项
+  for (let key in PANEL_TYPES) {
+    let option = document.createElement("option");
+    option.innerText = PANEL_TYPES[key].name;
+    option.value = key;
+    ADD_PANEL.selectEle.appendChild(option);
+  }
+  // select切换
+  ADD_PANEL.selectEle.onchange = (e) => {
+    ADD_PANEL.currentSelect = e.target.value;
+    ADD_PANEL.updateDataBySelect();
+  };
 };
-
-/**
- * 读取本地缓存，加载信息
- *
- * 所有的面板名称数组
- * panelList: ["name", "name2" .... ]
- *
- * 每一个面板名称里对应的
- * panelDict: {
- *  "name": ["text-a1f240", "text-1315"...]
- *  "name2": []
- *  ...
- * }
- *
- * "text-a1f240": {
- *  content: "..."
- *  type: "..."
- * }
- *
- */
-function initLoad() {
-  // 加载左侧导航栏内容
-  refreshNav();
-  refreshTextareaByPanel("default");
-}
 
 /**
  * 根据面板的名字初始化右侧界面
  */
 function refreshTextareaByPanel(panelName) {
-  let textareaList = document.querySelectorAll("textarea");
-  for (let i = 0; i < textareaList.length; i++) {
-    let textarea = textareaList[i];
-    textarea.value = JSON_STORAGE.get(`${panelName}-text-${i}`);
-    // 移除之前绑定的事件监听器
-    // textarea.removeEventListener("input", handleTextareaInput);
-
-    // 绑定新的事件监听器
-    // textarea.addEventListener("input", handleTextareaInput);
-    textarea.oninput = (e) => {
-      JSON_STORAGE.set(`${panelName}-text-${i}`, e.target.value);
-      refreshCurrentCacheSize();
-    };
-    // function handleTextareaInput(e) {
-    //   JSON_STORAGE.set(`${panelName}-text-${i}`, e.target.value);
-    // }
-  }
+  // 获取一下这个面板的宫格宽高
+  const panel = Panel.fromCache(panelName);
+  console.log(panel);
+  panel.refreshTextArea();
 }
+
 /**
- * 刷新左侧导航栏
+ * 刷新左侧导航栏界面区域
+ * 比较暴力，重新生成全部内容
  */
 function refreshNav() {
   const navContent = document.querySelector(".nav-content");
@@ -97,6 +68,7 @@ function refreshNav() {
   // 更新内容
   const panelList = JSON_STORAGE.get("panelList");
   for (let navItemName of panelList) {
+    if (!navItemName) return;
     navContent.appendChild(
       getNavItem(navItemName, GlobalData.currentPanel === navItemName)
     );
@@ -105,6 +77,7 @@ function refreshNav() {
 
 /**
  * 刷新剩余缓存
+ * TODO: 有必要做一个定期自动刷新
  */
 function refreshCurrentCacheSize() {
   const currentCache = document.querySelector(".current-cache");
@@ -117,12 +90,30 @@ function refreshCurrentCacheSize() {
 function initStorage() {
   let panelList = JSON_STORAGE.get("panelList");
   if (panelList === null) {
-    panelList = ["default", "a2"];
+    panelList = ["default"];
     JSON_STORAGE.set("panelList", panelList);
+    // 设置default信息
+    JSON_STORAGE.set(`default-data`, {
+      width: 3,
+      height: 2,
+      createTime: new Date().getTime(),
+    });
+    for (let i = 0; i < 6; i++) {
+      JSON_STORAGE.set(`default-text-${i}`, "");
+    }
   }
 }
 
+/**
+ * 创建一个左侧的面板选项条，顺便绑定逻辑
+ * @param {string} name 面板标题
+ * @param {boolean} isSelected 当前是否选中了这个
+ * @returns 一个元素
+ */
 function getNavItem(name, isSelected) {
+  if (!name) {
+    return;
+  }
   let res = document.createElement("div");
   res.classList.add("nav-item");
   if (isSelected) {
@@ -139,7 +130,7 @@ function getNavItem(name, isSelected) {
     GlobalData.currentPanel = name;
     refreshTextareaByPanel(name);
 
-    // 更改样式
+    // 更改 selected 样式
     const navContentList = document.querySelectorAll(".nav-item");
     for (let navItem of navContentList) {
       if (navItem.classList.contains("selected")) {
@@ -155,31 +146,17 @@ function getNavItem(name, isSelected) {
   deleteBtn.innerText = "x";
 
   // 删除按钮的点击事件
-  deleteBtn.addEventListener("click", () => {
-    if (name === "default") {
-      alert("default不能删除");
-      return;
-    }
-    const panelList = JSON_STORAGE.get("panelList");
-    const idxRemove = panelList.indexOf(name);
-    if (idxRemove === -1) {
-      alert("已经不存在了");
-      return;
-    }
-    panelList.splice(idxRemove, 1);
-    JSON_STORAGE.set("panelList", panelList);
-    refreshNav();
+  deleteBtn.onclick = () => {
+    // 删除数据
+    Panel.fromCache(name).delete();
     // 如果当前选择的是被删除的界面，那么更改当前选择
     if (GlobalData.currentPanel === name) {
-      GlobalData.currentPanel = "default"; // 偷个懒，直接等于第一个默认
-      // 更改右侧界面信息
-      refreshTextareaByPanel(GlobalData.currentPanel);
+      GlobalData.currentPanel = "default"; // 将当前界面指向default
     }
-    // 还要清空对应的textarea
-    for (let i = 0; i < 6; i++) {
-      JSON_STORAGE.delete(`${name}-text-${i}`);
-    }
-  });
+    refreshNav();
+    // 更改右侧界面信息
+    refreshTextareaByPanel(GlobalData.currentPanel);
+  };
   res.appendChild(deleteBtn);
 
   return res;

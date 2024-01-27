@@ -8,6 +8,21 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
   </head>
   <body>
+    <!-- 新建面板的弹窗 -->
+    <dialog class="add-panel">
+      <button class="close">X</button>
+      <h1>新建面板</h1>
+      <select name="" id="">
+        <!-- 选项用js自动更新 -->
+      </select>
+      <h2>展示效果</h2>
+      <section></section>
+
+      <h2>面板命名</h2>
+      <input type="text" class="title-input" />
+
+      <button class="create">创建</button>
+    </dialog>
     <!-- 左侧栏 -->
     <nav>
       <h3>
@@ -17,14 +32,10 @@
       </h3>
       <div class="nav-content">
         <!-- 内容将会被清空，用js重写 -->
-        <div class="nav-item">
-          <span class="title">default</span>
-          <button disabled>x</button>
-        </div>
       </div>
       <aside>使用：<span class="current-cache"></span> / 5MB</aside>
     </nav>
-    <!-- 右侧主界面 -->
+    <!-- 右侧主界面，确保main只有一个 -->
     <main>
       <!-- 暂定六个 -->
       <textarea></textarea>
@@ -36,5 +47,7 @@
     </main>
   </body>
   <script src="./js/jsonStorage.js"></script>
+  <script src="./js/addPanel.js"></script>
+  <script src="./js/panel.js"></script>
   <script src="./js/index.js"></script>
 </html>
