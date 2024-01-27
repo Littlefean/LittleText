@@ -1,2 +1,10 @@
+# 指定每行代码的最大字符数
 printWidth: 100
+
 htmlWhitespaceSensitivity: ignore
+
+# 默认语句结束加分号
+semi: true
+
+# 缩进两个空格
+tabWidth: 2

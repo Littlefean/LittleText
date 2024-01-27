@@ -10,6 +10,10 @@ type Data = {
 };
 
 export class MyStorage {
+  /**
+   * 更新字段
+   * @param fn
+   */
   public update(fn: (prev: Data) => Data): void {
     // 实现更新逻辑
     const data = fn(this.get());
@@ -25,13 +29,14 @@ export class MyStorage {
           default: {
             width: 3,
             height: 2,
-            data: ["", "", "", "", "", ""],
-          },
-        },
+            data: ["", "", "", "", "", ""]
+          }
+        }
       };
     }
     return JSON.parse(data);
   }
+
   public set(data: Data): void {
     // 实现设置逻辑
     localStorage.setItem("data", JSON.stringify(data));
