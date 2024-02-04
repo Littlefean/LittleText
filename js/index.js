@@ -226,6 +226,9 @@ function getNavItem(name, isSelected) {
 
   // 删除按钮的点击事件
   deleteBtn.onclick = () => {
+    if (!confirm(`你确定要删除【${name}】吗？`)) {
+      return;
+    }
     // 删除数据
     Panel.fromCache(name).delete();
     // 如果当前选择的是被删除的界面，那么更改当前选择
