@@ -49,7 +49,9 @@ https://littlefean.github.io/LittleText/
 // [3][4][5]
 `${name}-text-${i}`: "xxxx"
 
-
+`GLOBAL_DATA`: `{
+  lock: false, // 隐私保护功能是否开启
+}`
 
 ```
 

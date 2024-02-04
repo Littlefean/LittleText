@@ -27,6 +27,7 @@ class Panel {
     this.height = height;
     this.createTime = new Date();
   }
+
   /**
    * 判断面板是否重复了，在创建的时候调用
    * @param {string} title
@@ -49,7 +50,7 @@ class Panel {
     JSON_STORAGE.set(`${this.title}-data`, {
       width: this.width,
       height: this.height,
-      createTime: this.createTime.getTime(),
+      createTime: this.createTime.getTime()
     });
 
     // 宫格信息
@@ -111,7 +112,7 @@ class Panel {
       JSON_STORAGE.set(`${title}-data`, {
         width: 3,
         height: 2,
-        createTime: res.createTime.getTime(),
+        createTime: res.createTime.getTime()
       });
       return res;
     } else {
@@ -133,14 +134,42 @@ class Panel {
     mainEle.style.gridTemplateRows = `repeat(${this.height}, auto)`;
     for (let i = 0; i < this.width * this.height; i++) {
       let textarea = document.createElement("textarea");
-      textarea.className = `p-1 bg-transparent text-stone-100 leading-6 ring ring-inset ring-stone-700 focus:bg-stone-900 ring-1 outline-0 resize-none transition`
-      textarea.value = JSON_STORAGE.get(`${this.title}-text-${i}`);
+      textarea.className = `p-1 bg-transparent text-stone-100 leading-6 ring ring-inset ring-stone-700 focus:bg-stone-900 ring-1 outline-0 resize-none transition`;
+      const textareaValue = JSON_STORAGE.get(`${this.title}-text-${i}`);
+      if (textareaValue === null) {
+        textarea.value = "";
+      } else {
+        textarea.value = textareaValue;
+      }
+
+
+      // 阻止tab键切换焦点，用chatGPT写的
+      textarea.onkeydown = function(event) {
+        // 检查按下的键是否是Tab键
+        if (event.key === "Tab") {
+          // 阻止默认行为
+          event.preventDefault();
+
+          // 插入制表符（\t）
+          const start = this.selectionStart;
+          const end = this.selectionEnd;
+          const value = this.value;
+
+          // 在光标位置插入制表符
+          this.value = value.substring(0, start) + "\t" + value.substring(end);
+
+          // 移动光标到插入制表符后
+          this.setSelectionRange(start + 1, start + 1);
+        }
+      };
+
       textarea.oninput = (e) => {
         JSON_STORAGE.set(`${this.title}-text-${i}`, e.target.value);
       };
       mainEle.appendChild(textarea);
     }
   }
+
   /**
    * 更改其中一个宫格内容所触发的信息改变
    * @param {{x: number, y: number}} param0 发生更改的位置
@@ -165,9 +194,10 @@ class Panel {
   static indexToLocation(index, width) {
     return {
       x: index % width,
-      y: Math.floor(index / width),
+      y: Math.floor(index / width)
     };
   }
+
   /**
    * 与上面的方法相反
    */

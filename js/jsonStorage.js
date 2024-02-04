@@ -2,7 +2,7 @@ const JSON_STORAGE = {
   /**
    *
    * @param {string} key
-   * @returns JSON 对象，也有可能是null
+   * @returns {object | string | null} JSON 对象，null的情况可能是不存在key或者解析错误
    */
   get(key) {
     let res = localStorage.getItem(key);
@@ -10,13 +10,17 @@ const JSON_STORAGE = {
       return null;
     }
     // 不是null的情况
-    return JSON.parse(res);
+    try {
+      return JSON.parse(res);
+    } catch (e) {
+      return null;
+    }
   },
 
   /**
-   *
-   * @param {string} key
-   * @param {JSON} value
+   * 设置一个内容
+   * @param {string} key 保证key是字符串，不要像python那样搞
+   * @param {object} value
    */
   set(key, value) {
     if (typeof key !== "string") {
@@ -42,5 +46,5 @@ const JSON_STORAGE = {
       }
     }
     return total / (1024 * 1024); // 转换为 MB
-  },
+  }
 };
