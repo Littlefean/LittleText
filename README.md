@@ -41,7 +41,14 @@ b站链接：https://www.bilibili.com/video/BV1Hx4y1Z7ud
 https://littlefean.github.io/LittleText/
 ```
 
+## 项目架构
 
+`js` 文件夹下，分成四层架构
+
+1. 组件层：components
+2. 业务层：service
+3. 子系统层：systems
+4. 工具底层：tools
 
 ## key-value存储结构
 

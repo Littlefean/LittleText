@@ -6,7 +6,7 @@
   <title>宫格记事本</title>
   <link rel="stylesheet" href="./css/index.css" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <script src="./js/tailwindcss.js"></script>
+  <script src="js/tools/tailwindcss.js"></script>
 </head>
 
 <body class="h-screen flex bg-stone-800 text-stone-100">
@@ -73,11 +73,14 @@
   <!-- js 会在内部修改增加内容 textarea -->
 </main>
 </body>
-<script src="./js/tools.js"></script>
-<script src="./js/jsonStorage.js"></script>
-<script src="./js/globalData.js"></script>
-<script src="./js/globalSettingPanel.js"></script>
-<script src="./js/addPanel.js"></script>
-<script src="./js/panel.js"></script>
-<script src="./js/index.js"></script>
+<script src="js/tools/utils.js"></script>
+<script src="js/systems/jsonStorage.js"></script>
+<script src="js/service/globalData.js"></script>
+
+<script src="js/components/NAV_LIST.js"></script>
+<script src="js/components/dialog.js"></script>
+<script src="js/components/dialogGlobalSettingPanel.js"></script>
+<script src="js/components/dialogAddPanel.js"></script>
+<script src="js/components/componentTextareaContainer.js"></script>
+<script src="js/index.js"></script>
 </html>

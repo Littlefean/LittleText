@@ -15,7 +15,7 @@
  * │                      │
  * └──────────────────────┘
  */
-class Panel {
+class ComponentTextareaContainer {
   /**
    * @param {string} title
    * @param {number} width
@@ -35,6 +35,10 @@ class Panel {
   static isRepeat(title) {
     const panelList = JSON_STORAGE.get("panelList");
     return panelList.includes(title);
+  }
+
+  static init() {
+    this.refreshDomByPanelName(GLOBAL_DATA.currentPanel);
   }
 
   /**
@@ -86,6 +90,14 @@ class Panel {
   }
 
   /**
+   * 根据面板名称刷新右侧区域
+   * @param panelName {string}
+   */
+  static refreshDomByPanelName(panelName) {
+    this.fromCache(panelName).refreshTextArea();
+  }
+
+  /**
    * 从localStorage中解析出这个对象来
    * 例如 panelList: "[{title: "xxx", width: 3, height: 6, createTime: 147777}]"
    * 传入的参数是将字符串解析后的json
@@ -98,15 +110,12 @@ class Panel {
     const panelList = JSON_STORAGE.get("panelList");
     if (!panelList.includes(title)) {
       console.warn(`没从缓存中找到${title}的面板`);
-    } else {
-      console.log(`找到了${title}的面板`);
     }
 
     const obj = JSON_STORAGE.get(`${title}-data`);
-    console.log(`从缓存中读取面板信息：`, obj);
     if (obj === null) {
       // 说明是老版本，经典六宫格
-      let res = new Panel(title, 3, 2);
+      let res = new ComponentTextareaContainer(title, 3, 2);
       res.createTime = new Date();
       // 顺手更新一下date数据
       JSON_STORAGE.set(`${title}-data`, {
@@ -117,7 +126,7 @@ class Panel {
       return res;
     } else {
       // 新版本
-      let res = new Panel(title, obj.width, obj.height);
+      let res = new ComponentTextareaContainer(title, obj.width, obj.height);
       res.createTime = new Date(obj.createTime);
       return res;
     }
