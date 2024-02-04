@@ -1,53 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>宫格记事本</title>
-    <link rel="stylesheet" href="./css/index.css" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  </head>
-  <body>
-    <!-- 新建面板的弹窗 -->
-    <dialog class="add-panel">
-      <button class="close">X</button>
-      <h1>新建面板</h1>
-      <select name="" id="">
-        <!-- 选项用js自动更新 -->
-      </select>
-      <h2>展示效果</h2>
-      <section></section>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>宫格记事本</title>
+  <link rel="stylesheet" href="./css/index.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <script src="./js/tailwindcss.js"></script>
+</head>
 
-      <h2>面板命名</h2>
-      <input type="text" class="title-input" />
+<body class="h-screen flex bg-stone-800 text-stone-100">
 
-      <button class="create">创建</button>
-    </dialog>
-    <!-- 左侧栏 -->
-    <nav>
-      <h3>
-        <img src="./favicon.ico" alt="Icon" width="30" height="30" />
-        <span>宫格记事本</span>
-        <button class="add-panel-btn">+</button>
-      </h3>
-      <div class="nav-content">
-        <!-- 内容将会被清空，用js重写 -->
-      </div>
-      <aside>使用：<span class="current-cache"></span> / 5MB</aside>
-    </nav>
-    <!-- 右侧主界面，确保main只有一个 -->
-    <main>
-      <!-- 暂定六个 -->
-      <textarea></textarea>
-      <textarea></textarea>
-      <textarea></textarea>
-      <textarea></textarea>
-      <textarea></textarea>
-      <textarea></textarea>
-    </main>
-  </body>
-  <script src="./js/jsonStorage.js"></script>
-  <script src="./js/addPanel.js"></script>
-  <script src="./js/panel.js"></script>
-  <script src="./js/index.js"></script>
+<!-- 新建面板的弹窗 -->
+<dialog
+  class="hidden size-96 flex flex-col justify-center items-center bg-stone-900 text-stone-100 rounded left-1/2 top-1/2 -ml-48 -mt-48 leading-8"
+  id="add-panel">
+
+  <h1 class="leading-8 text-xl">新建面板</h1>
+  <select name="" class="text-stone-100 bg-stone-700" id="">
+    <!-- 选项用js自动更新 -->
+  </select>
+
+  <h2>面板命名</h2>
+  <input type="text" class="title-input pl-1 text-stone-100 bg-stone-700" />
+  <div class="m-4">
+    <button class="close px-4 rounded bg-red-700 text-red-100">取消</button>
+    <button class="create px-4 rounded bg-green-700 text-green-100">创建</button>
+  </div>
+</dialog>
+
+
+<!-- 左侧栏 -->
+<nav class="w-64 flex flex-col h-full p-1 bg-stone-700">
+  <h3 class="flex items-center">
+    <img src="./favicon.ico" alt="Icon" width="30" height="30" />
+    <span class="p-1">宫格记事本</span>
+    <button class="text-green-300 bg-green-600 ring rounded px-2 mx-2" id="add-panel-btn">+</button>
+  </h3>
+  <div class="flex-1 p-1 mt-3 overflow-y-auto" id="nav-content">
+    <!-- 内容将会被清空，用js重写 -->
+  </div>
+  <aside class="leading-8">使用：<span class="current-cache"></span> / 5MB</aside>
+</nav>
+
+
+<!-- 右侧主界面，确保main只有一个 -->
+<main class="flex-1 grid">
+  <!-- js 会在内部修改增加内容 textarea -->
+</main>
+</body>
+
+<script src="./js/jsonStorage.js"></script>
+<script src="./js/addPanel.js"></script>
+<script src="./js/panel.js"></script>
+<script src="./js/index.js"></script>
 </html>

@@ -1,87 +1,7 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-button {
-  user-select: none;
-  border-radius: 4px;
-  min-width: 20px;
-  min-height: 20px;
-  line-height: 20px;
-  font-size: 16px;
-  outline: solid 1px;
-  border: none;
-}
-button:hover {
-  cursor: pointer;
-}
-body {
-  background-color: #2b2b2b;
-  color: whitesmoke;
-  display: flex;
-  /* 使用 Flex 布局 */
-  height: 100vh;
-}
-body dialog.add-panel {
-  height: 500px;
-  width: 600px;
-  left: 50%;
-  top: 50%;
-  margin-left: -300px;
-  margin-top: -250px;
-  text-align: center;
-  background-color: #2b2b2b;
-  color: white;
-  border-radius: 15px;
-}
-body dialog.add-panel h1 {
-  line-height: 2em;
-}
-body dialog.add-panel button.close {
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  width: 50px;
-  height: 50px;
-  color: red;
-  background-color: darkred;
-}
-body dialog.add-panel button.create {
-  font-size: 20px;
-  line-height: 2em;
-  padding: 0 10px;
-  background-color: green;
-  color: yellowgreen;
-}
-body nav {
-  width: 15%;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  /* 设置导航栏的高度为整个视口的高度 */
-  background-color: #333;
-  /* 左侧栏背景颜色 */
-  padding: 5px;
-}
-body nav h3 {
-  display: flex;
-  align-items: center;
-}
-body nav h3 span {
-  padding: 0 5px;
-}
-body nav .add-panel-btn {
-  background-color: green;
-  color: greenyellow;
-}
-body nav .nav-content {
-  flex-grow: 1;
-  /* 让内容占据剩余的空间 */
-  overflow-y: auto;
-  /* 添加滚动条，如果内容溢出 */
-  margin-top: 10px;
-  padding: 3px;
+/**
+ * 此文件中只存放 tailwindcss 不能存放的东西
+ */
+body nav #nav-content {
   /* Firefox浏览器 */
   scrollbar-width: thin;
   scrollbar-color: #666 #1e1e1e;
@@ -89,72 +9,23 @@ body nav .nav-content {
   scrollbar-base-color: #666;
   scrollbar-arrow-color: #eee;
 }
-body nav .nav-content::-webkit-scrollbar {
+body nav #nav-content::-webkit-scrollbar {
   width: 5px;
 }
-body nav .nav-content::-webkit-scrollbar-thumb {
+body nav #nav-content::-webkit-scrollbar-thumb {
   background-color: #666;
   border-radius: 6px;
 }
-body nav .nav-content::-webkit-scrollbar-track {
+body nav #nav-content::-webkit-scrollbar-track {
   background-color: #1e1e1e;
-}
-body nav .nav-content .nav-item {
-  user-select: none;
-  background-color: #1e1e1e;
-  padding: 5px;
-  border-radius: 5px;
-  margin: 5px 0;
-  overflow: hidden;
-  transition: all 0.2s;
-}
-body nav .nav-content .nav-item:hover {
-  margin-left: 0.2em;
-  cursor: pointer;
-}
-body nav .nav-content .nav-item:hover button {
-  display: block;
-}
-body nav .nav-content .nav-item button {
-  display: none;
-  float: right;
-  color: red;
-  background-color: darkred;
-}
-body nav .nav-content .selected {
-  box-shadow: 0 0 5px wheat;
-}
-body nav aside {
-  line-height: 2em;
-}
-body main {
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  /* 三列，每列宽度相等 */
-  grid-template-rows: repeat(2, auto);
-  /* 两行，每行高度自适应内容 */
 }
 body main textarea {
-  outline: solid 1px gray;
-  width: 100%;
-  padding: 5px;
-  background-color: transparent;
-  color: whitesmoke;
-  line-height: 1.5em;
-  font-size: 16px;
-  font-family: "Microsoft YaHei", sans-serif;
-  resize: none;
-  transition: all 0.2s;
   /* Firefox浏览器 */
   scrollbar-width: thin;
   scrollbar-color: #666 #1e1e1e;
   /* IE浏览器 */
   scrollbar-base-color: #666;
   scrollbar-arrow-color: #eee;
-}
-body main textarea:focus {
-  background-color: #1e1e1e;
 }
 body main textarea::-webkit-scrollbar {
   width: 5px;
@@ -166,3 +37,4 @@ body main textarea::-webkit-scrollbar-thumb {
 body main textarea::-webkit-scrollbar-track {
   background-color: #1e1e1e;
 }
+/*# sourceMappingURL=index.css.map */

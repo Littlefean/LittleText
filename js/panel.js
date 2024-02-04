@@ -1,6 +1,19 @@
 /**
  * 一个包含很多宫格记事本的面板
  * 内部封装对本地数据的操作和修改
+ * ┌──────────────────────┐
+ * │                      │
+ * │ ┌────┐ ┌────┐ ┌────┐ │
+ * │ │    │ │    │ │    │ │
+ * │ │    │ │    │ │    │ │
+ * │ └────┘ └────┘ └────┘ │
+ * │                      │
+ * │ ┌────┐ ┌────┐ ┌────┐ │
+ * │ │    │ │    │ │    │ │
+ * │ │    │ │    │ │    │ │
+ * │ └────┘ └────┘ └────┘ │
+ * │                      │
+ * └──────────────────────┘
  */
 class Panel {
   /**
@@ -119,11 +132,10 @@ class Panel {
     mainEle.style.gridTemplateColumns = `repeat(${this.width}, 1fr)`;
     mainEle.style.gridTemplateRows = `repeat(${this.height}, auto)`;
     for (let i = 0; i < this.width * this.height; i++) {
-      console.log(i, "创建textarea");
       let textarea = document.createElement("textarea");
+      textarea.className = `p-1 bg-transparent text-stone-100 leading-6 ring ring-inset ring-stone-700 focus:bg-stone-900 ring-1 outline-0 resize-none transition`
       textarea.value = JSON_STORAGE.get(`${this.title}-text-${i}`);
       textarea.oninput = (e) => {
-        console.log(e.target.value, this.title);
         JSON_STORAGE.set(`${this.title}-text-${i}`, e.target.value);
       };
       mainEle.appendChild(textarea);

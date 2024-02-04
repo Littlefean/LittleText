@@ -17,7 +17,7 @@ window.onload = function () {
   refreshCurrentCacheSize();
 
   // 增加面板按钮 绑定
-  document.querySelector(".add-panel-btn").onclick = () => {
+  document.querySelector("#add-panel-btn").onclick = () => {
     ADD_PANEL.open();
   };
 
@@ -62,7 +62,7 @@ function refreshTextareaByPanel(panelName) {
  * 比较暴力，重新生成全部内容
  */
 function refreshNav() {
-  const navContent = document.querySelector(".nav-content");
+  const navContent = document.querySelector("#nav-content");
   // 清除原有内容
   navContent.innerHTML = "";
   // 更新内容
@@ -115,13 +115,16 @@ function getNavItem(name, isSelected) {
     return;
   }
   let res = document.createElement("div");
+  res.className = `group flex p-1 bg-stone-800 my-2 overflow-hidden transition rounded select-none cursor-pointer ring-green-400`;
   res.classList.add("nav-item");
   if (isSelected) {
-    res.classList.add("selected");
+    res.classList.add("ring");
+    res.classList.add("text-green-400");
   }
 
   let title = document.createElement("span");
   title.innerText = name;
+  title.className = `flex-1 truncate`
   res.appendChild(title);
 
   // 点击这个元素本身的效果
@@ -133,17 +136,21 @@ function getNavItem(name, isSelected) {
     // 更改 selected 样式
     const navContentList = document.querySelectorAll(".nav-item");
     for (let navItem of navContentList) {
-      if (navItem.classList.contains("selected")) {
-        navItem.classList.remove("selected");
+      if (navItem.classList.contains("ring")) {
+        navItem.classList.remove("ring");
+        navItem.classList.remove("text-green-400");
       }
-      if (!navItem.classList.contains("selected")) {
-        res.classList.add("selected");
+      if (!navItem.classList.contains("ring")) {
+        res.classList.add("ring");
+        res.classList.add("text-green-400");
+
       }
     }
   };
 
   let deleteBtn = document.createElement("button");
   deleteBtn.innerText = "x";
+  deleteBtn.className = `h-full px-2 rounded text-red-100 bg-red-700 hidden group-hover:block`
 
   // 删除按钮的点击事件
   deleteBtn.onclick = () => {

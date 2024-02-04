@@ -16,11 +16,11 @@ const PANEL_TYPES = {
  * 增加面板弹窗的交互逻辑
  */
 const ADD_PANEL = {
-  panelEle: document.querySelector("dialog.add-panel"),
-  closeBtn: document.querySelector("dialog.add-panel button.close"),
-  createBtn: document.querySelector("dialog.add-panel button.create"),
-  titleInput: document.querySelector("dialog.add-panel input.title-input"),
-  selectEle: document.querySelector("dialog.add-panel select"),
+  panelEle: document.querySelector("dialog#add-panel"),
+  closeBtn: document.querySelector("dialog#add-panel button.close"),
+  createBtn: document.querySelector("dialog#add-panel button.create"),
+  titleInput: document.querySelector("dialog#add-panel input.title-input"),
+  selectEle: document.querySelector("dialog#add-panel select"),
   // 用户即将输入的标题
   title: "",
   width: 3,
@@ -33,10 +33,10 @@ const ADD_PANEL = {
     this.height = type.height;
   },
   close() {
-    this.panelEle.style.display = "none";
+    this.panelEle.classList.add('hidden');
   },
   open() {
-    this.panelEle.style.display = "block";
+    this.panelEle.classList.remove('hidden');
   },
   create() {
     // 看看当前面板是否重复
@@ -50,7 +50,7 @@ const ADD_PANEL = {
     }
     // 判断是否含有自动填写初始内容
     let defaultContent = null;
-    if (this.currentSelect == "WEEK") {
+    if (this.currentSelect === "WEEK") {
       defaultContent = [
         "周一\n",
         "周二\n",
@@ -60,12 +60,12 @@ const ADD_PANEL = {
         "周六\n",
         "周日\n",
       ];
-    } else if (this.currentSelect == "MOON") {
+    } else if (this.currentSelect === "MOON") {
       const currentDate = new Date();
       const currentYear = currentDate.getFullYear();
       const currentMonth = currentDate.getMonth();
       defaultContent = generateCalendarArray(currentYear, currentMonth);
-    } else if (this.currentSelect == "YEAR") {
+    } else if (this.currentSelect === "YEAR") {
       const months = [
         "一月",
         "二月",
