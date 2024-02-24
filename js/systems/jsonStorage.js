@@ -46,5 +46,37 @@ const JSON_STORAGE = {
       }
     }
     return total / (1024 * 1024); // 转换为 MB
-  }
+  },
+
+  /**
+   * 覆盖导入json字符串格式，同key会覆盖
+   * 如果导入的文件无法解析，会直接alert弹窗
+   * @param {string} contentString json字符串
+   */
+  importByJsonString(contentString) {
+    try {
+      // 解析
+      const parsedData = JSON.parse(contentString);
+      console.log(parsedData);
+      // 解析正常，更新
+      for (let key in parsedData) {
+        this.set(key, parsedData[key]);
+      }
+    } catch (e) {
+      alert("Error importing JSON data:", e);
+    }
+  },
+  /**
+   * 导出成json字符串格式。
+   * @returns {string}
+   */
+  exportToJsonString() {
+    let data = {};
+    for (let key in localStorage) {
+      if (localStorage.hasOwnProperty(key)) {
+        data[key] = this.get(key);
+      }
+    }
+    return JSON.stringify(data);
+  },
 };

@@ -1,3 +1,6 @@
 .idea
 node_modules
 *.map
+
+# 测试文件
+test.html
