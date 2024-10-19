@@ -40,7 +40,7 @@ class GLOBAL_SETTINGS_PANEL extends Dialog {
     let a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     const date = new Date();
-    a.download = `宫格日记本${date.getFullYear()}-${date.getMonth()}-${date.getDate()}导出.json`;
+    a.download = `宫格日记本${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}导出.json`;
 
     document.body.appendChild(a);
     a.click();

@@ -20,11 +20,13 @@ class ComponentTextareaContainer {
    * @param {string} title
    * @param {number} width
    * @param {number} height
+   * @param {string} type
    */
-  constructor(title, width, height) {
+  constructor(title, width, height, type="UNKNOW") {
     this.title = title;
     this.width = width;
     this.height = height;
+    this.type = type;
     this.createTime = new Date();
   }
 
@@ -54,6 +56,7 @@ class ComponentTextareaContainer {
     JSON_STORAGE.set(`${this.title}-data`, {
       width: this.width,
       height: this.height,
+      type: this.type,
       createTime: this.createTime.getTime()
     });
 
@@ -110,23 +113,27 @@ class ComponentTextareaContainer {
     const panelList = JSON_STORAGE.get("panelList");
     if (!panelList.includes(title)) {
       console.warn(`没从缓存中找到${title}的面板`);
+      let res = new ComponentTextareaContainer(title, 3, 2, "CLASSICS");
+      res.createTime = new Date();
+      return res;
     }
 
     const obj = JSON_STORAGE.get(`${title}-data`);
     if (obj === null) {
       // 说明是老版本，经典六宫格
-      let res = new ComponentTextareaContainer(title, 3, 2);
+      let res = new ComponentTextareaContainer(title, 3, 2, "CLASSICS");
       res.createTime = new Date();
       // 顺手更新一下date数据
       JSON_STORAGE.set(`${title}-data`, {
         width: 3,
         height: 2,
+        type: "CLASSICS",
         createTime: res.createTime.getTime()
       });
       return res;
     } else {
       // 新版本
-      let res = new ComponentTextareaContainer(title, obj.width, obj.height);
+      let res = new ComponentTextareaContainer(title, obj.width, obj.height, obj.type);
       res.createTime = new Date(obj.createTime);
       return res;
     }
@@ -138,6 +145,17 @@ class ComponentTextareaContainer {
   refreshTextArea() {
     const mainEle = document.querySelector("main");
     mainEle.innerHTML = "";
+
+    // 获取当前日期信息
+    const now = new Date();
+    const currentDay = now.getDate();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    let daysOfWeek = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+    let nameOfMonth = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
+    const todayIs = daysOfWeek[now.getDay()];
+    const currentMonthIs = nameOfMonth[currentMonth]
+
     // 修改main的布局分布
     mainEle.style.gridTemplateColumns = `repeat(${this.width}, 1fr)`;
     mainEle.style.gridTemplateRows = `repeat(${this.height}, auto)`;
@@ -149,6 +167,27 @@ class ComponentTextareaContainer {
         textarea.value = "";
       } else {
         textarea.value = textareaValue;
+      }
+
+      // 高亮对应日期宫格的边框
+      if (this.type === "WEEK") {
+        // 周宫格，检查是否是今天
+        const dayName = textarea.value.split("\n")[0];
+        if (dayName === todayIs) {
+          textarea.className = `p-1 bg-transparent text-yellow-200 leading-6 ring ring-inset ring-stone-700 focus:bg-stone-900 ring-1 outline-0 resize-none transition`;
+        }
+      } else if (this.type === "MOON") {
+        // 月宫格，检查日期
+        const dateStr = textarea.value.split("\n")[0].split(" ")[0];
+        if (dateStr === `${currentMonth + 1}月${currentDay}日`) {
+          textarea.className = `p-1 bg-transparent text-yellow-200 leading-6 ring ring-inset ring-stone-700 focus:bg-stone-900 ring-1 outline-0 resize-none transition`;
+        }
+      } else if (this.type === "YEAR") {
+        // 年宫格，检查月份
+        const monthName = textarea.value.split("\n")[0];
+        if (monthName === currentMonthIs) {
+          textarea.className = `p-1 bg-transparent text-yellow-200 leading-6 ring ring-inset ring-stone-700 focus:bg-stone-900 ring-1 outline-0 resize-none transition`;
+        }
       }
 
 
