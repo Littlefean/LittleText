@@ -1,4 +1,5 @@
 window.onload = function() {
+  
   // 初始化缓存，防止一些key没有
   initStorage();
 
@@ -27,6 +28,7 @@ window.onload = function() {
       // 判断是不是要锁住了
       if (GLOBAL_DATA.lockTimeCurrent >= GLOBAL_DATA.lockTimeMax) {
         GLOBAL_DATA.update("isLockCurrent", true);  // 锁住
+        GLOBAL_DATA.update("previousPannel", GLOBAL_DATA.currentPanel);
         GLOBAL_DATA.update("currentPanel", "default");
         NAV_LIST.refreshDom();
         ComponentTextareaContainer.refreshDomByPanelName(GLOBAL_DATA.currentPanel);
@@ -57,10 +59,34 @@ window.onload = function() {
     if (isCtrlPressed && isQKeyPressed) {
       GLOBAL_DATA.update("isLockCurrent", false);
       GLOBAL_DATA.update("lockTimeCurrent", 0);
+      // 恢复被锁之前的Panel
+      GLOBAL_DATA.update("currentPanel", GLOBAL_DATA.previousPannel);
       NAV_LIST.refreshDom();
+      ComponentTextareaContainer.refreshDomByPanelName(GLOBAL_DATA.currentPanel);
     }
   });
+
+   // 初始化 lastDate
+  if (!(GLOBAL_DATA.lastDate)) {
+    GLOBAL_DATA.update("lastDate", new Date().toISOString().slice(0, 10)); // 获取当前日期（YYYY-MM-DD）
+  }
+
+  // 定时检查日期更新，使得跨过零点也不影响日期高亮
+  setInterval(() => {
+    checkDateUpdate();
+  }, 1000 * 60); // 每分钟检查一次
 };
+
+
+function checkDateUpdate() {
+  const currentDate = new Date().toISOString().slice(0, 10); // 获取当前日期（YYYY-MM-DD）
+
+  if (GLOBAL_DATA.lastDate !== currentDate) {
+    GLOBAL_DATA.update("lastDate", currentDate); // 更新 GLOBAL_DATA.lastDate
+    window.location.reload(); // 刷新页面
+  }
+}
+
 
 /**
  * 刷新一次剩余缓存
@@ -83,6 +109,7 @@ function initStorage() {
     JSON_STORAGE.set(`default-data`, {
       width: 3,
       height: 2,
+      type: "CLASSICS",
       createTime: new Date().getTime()
     });
     for (let i = 0; i < 6; i++) {

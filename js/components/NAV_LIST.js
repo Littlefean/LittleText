@@ -75,7 +75,8 @@ class NAV_LIST {
     deleteBtn.className = `h-full px-2 rounded text-red-100 bg-red-700 hidden group-hover:block`;
 
     // 删除按钮的点击事件
-    deleteBtn.onclick = () => {
+    deleteBtn.onclick = (event) => {
+      event.stopPropagation(); // 阻止事件冒泡
       if (!confirm(`你确定要删除【${name}】吗？`)) {
         return;
       }
@@ -87,7 +88,7 @@ class NAV_LIST {
       }
       this.refreshDom();
       // 更改右侧界面信息
-      ComponentTextareaContainer.refreshDomByPanelName(name);
+      ComponentTextareaContainer.refreshDomByPanelName(GLOBAL_DATA.currentPanel);
     };
     res.appendChild(deleteBtn);
 

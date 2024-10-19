@@ -79,4 +79,13 @@ const JSON_STORAGE = {
     }
     return JSON.stringify(data);
   },
+  /**
+   * 清空所有缓存数据！！非必要不要使用！仅用作调试！
+   */
+  clearAll() {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const key = localStorage.key(i);
+      localStorage.removeItem(key);
+    }
+  },
 };
